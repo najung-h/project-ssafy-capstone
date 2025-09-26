@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+# settings.py
+from dotenv import load_dotenv
+load_dotenv()  # .env 로드
 from pathlib import Path
 import os
 

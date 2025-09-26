@@ -43,3 +43,5 @@ wordcloud
 pillow
 numpy
 matplotlib
+openai
+python-dotenv
