@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>로그인 페이지 - SSAFY</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root{
+      --brand-blue: #2a6bd8;
+      --header-bg: #e8e8e8;
+      --card-border: #dcdfe6;
+      --input-border: #dbe3ea;
+      --cta: #0ec0f5;
+    }
+
+    /* OOCSS-like structure */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans KR";
+      color: #222;
+      background: #fff;
+    }
+
+    /* Top header bar */
+    .site-header {
+      background: var(--header-bg);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--brand-blue);
+    }
+    .top-nav a {
+      margin-left: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .top-nav a:hover { text-decoration: underline; }
+
+    /* Centered login panel (modal-like) */
+    .page-wrap {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+    }
+
+    .login-card {
+      width: 660px;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+
+    .login-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      border-bottom: 1px solid #e9e9e9;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .login-close {
+      border: none;
+      background: transparent;
+      font-size: 22px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .login-body {
+      padding: 14px 22px 20px 22px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      color: #374148;
+    }
+
+    .form-control {
+      height: 48px;
+      border-radius: 8px;
+      border: 1px solid var(--input-border);
+      padding: 0 12px;
+    }
+
+    .field-group { margin-bottom: 14px; }
+
+    /* Password field with icon at right */
+    .password-wrap {
+      position: relative;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      font-size: 16px;
+      color: #6c6c6c;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .login-btn {
+      width: 100%;
+      border-radius: 8px;
+      height: 48px;
+      font-weight: 600;
+      background: var(--cta);
+      border: 0;
+      color: #fff;
+    }
+    .login-btn:hover { background: #0ea9e6; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="brand" aria-label="사이트 로고">SSAFY</div>
+    <nav class="top-nav" aria-label="주 메뉴">
+      <a href="#">검색</a>
+      <a href="#">로그인</a>
+      <a href="#">마이페이지</a>
+    </nav>
+  </header>
+
+  <!-- Main content: login modal-like card centered -->
+  <main class="page-wrap" role="main">
+    <section class="login-card" aria-label="로그인 카드">
+      <div class="login-header">
+        로그인
+        <button class="login-close" aria-label="닫기" onclick="document.querySelector('.login-card').style.display='none'">×</button>
+      </div>
+      <div class="login-body">
+        <form>
+          <div class="field-group">
+            <label class="form-label" for="email">이메일</label>
+            <input type="email" id="email" class="form-control" placeholder="ssafy@example.com" />
+          </div>
+
+          <div class="field-group">
+            <label class="form-label" for="password">비밀번호</label>
+            <div class="password-wrap">
+              <input type="password" id="password" class="form-control" placeholder="비밀번호를 입력하세요" />
+              <button type="button" class="password-toggle" aria-label="비밀번호 보이기" onclick="togglePwd()">👁</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn login-btn mt-2">로그인</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Optional Bootstrap JS (for potential future enhancements) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // 간단한 비밀번호 보이기 토글
+    function togglePwd(){
+      const pwd = document.getElementById('password');
+      const isPwd = pwd.getAttribute('type') === 'password';
+      pwd.setAttribute('type', isPwd ? 'text' : 'password');
+    }
+  </script>
+</body>
+</html>
