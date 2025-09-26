@@ -47,3 +47,7 @@ def search_company(company_name):
 
 if __name__ == "__main__":
     search_company("삼성전자")
+
+
+# find_element
+# send_keys()

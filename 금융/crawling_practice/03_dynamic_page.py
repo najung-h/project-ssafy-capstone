@@ -71,5 +71,16 @@ def get_google_data(keyword):
 
 
 if __name__ == "__main__":
-    keyword = "파이썬"
+    keyword = "나정현"
     get_google_data(keyword)
+
+
+# 실행 결과
+'''
+DevTools listening on ws://127.0.0.1:56718/devtools/browser/4591b00d-dd2e-480c-a98a-9545a7553d90
+[19332:23164:0926/121355.632:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT   
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[DEBUG] 검색 결과 제목: Google Sites
+[DEBUG] 03_google_result.html 저장 완료
+
+'''

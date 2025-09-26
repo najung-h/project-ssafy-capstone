@@ -62,3 +62,10 @@ def open_community_page(company_name):
 
 if __name__ == "__main__":
     open_community_page("삼성전자")
+
+# 출력결과
+'''
+[INFO] 종목 코드 추출 완료 → A005930
+[INFO] 커뮤니티 페이지 접속 완료: https://www.tossinvest.com/stocks/A005930/community
+
+'''
