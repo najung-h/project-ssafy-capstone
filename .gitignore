@@ -205,3 +205,100 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# Created by https://www.toptal.com/developers/gitignore/api/venv
+# Edit at https://www.toptal.com/developers/gitignore?templates=venv
+
+### venv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
+# End of https://www.toptal.com/developers/gitignore/api/venv
+
+# -------------------------
+# Git Ignore for Secrets
+# -------------------------
+
+# 환경 변수 파일
+.env
+*.env
+!*.env.example   # 예시 파일은 공유 가능
+
+# 인증/보안 키
+*.pem
+*.p12
+id_rsa
+*.key
+
+# -------------------------
+# Python 기본 무시 항목
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# 가상환경
+venv/
+.envs/
+.venv/
+env/
+ENV/
+
+# IDE/에디터 설정
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+
+# -------------------------
+# Git Ignore for Secrets
+# -------------------------
+
+# 환경 변수 파일
+.env
+*.env
+!*.env.example   # 예시 파일은 공유 가능
+
+# 인증/보안 키
+*.pem
+*.p12
+id_rsa
+*.key
+
+# -------------------------
+# Python 기본 무시 항목
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# 가상환경
+venv/
+.envs/
+.venv/
+env/
+ENV/
+
+# IDE/에디터 설정
+.vscode/
+.idea/
+*.swp
+.DS_Store
