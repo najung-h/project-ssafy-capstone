@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}관심종목 찾아볼까요?{% endblock %}</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container-fluid">
+    <!-- 브랜드 -->
+    <a class="navbar-brand fw-bold" href="{% url 'crawlings:index' %}">
+      📊 Stock Insight
+    </a>
+
+    <!-- 모바일 토글 -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- 메뉴 -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'accounts:watchlist' %}">
+              ⭐ 내 관심종목
+            </a>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link text-light small">환영합니다, {{ user.username }}님</span>
+          </li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'accounts:logout' %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-outline-light ms-2">로그아웃</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item me-2">
+            <a class="btn btn-sm btn-outline-light" href="{% url 'accounts:login' %}">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-sm btn-light text-primary fw-bold" href="{% url 'accounts:signup' %}">회원가입</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- ✅ 여는 블록: 반드시 있어야 함 -->
+<div class="container mt-4">
+  {% block content %}
+  {% endblock %}   <!-- ✅ 닫는 블록: 이름 생략/명시 둘 다 가능. 하나만 사용 -->
+</div>
+
+</body>
+</html>

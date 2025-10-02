@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h2 class="card-title mb-3">📈 내 관심종목</h2>
+      <p class="text-muted">
+        현재 사용자: <strong>{{ user.username }}</strong>  
+        <span class="badge bg-primary ms-2">항목 수: {{ items|length }}</span>
+      </p>
+
+      <!-- 관심 종목 추가 폼 -->
+      <form method="post" action="{% url 'accounts:add_watch' %}" class="row g-2 mb-4">
+        {% csrf_token %}
+        <div class="col-md-5">
+          <input type="text" name="company_name" class="form-control" placeholder="회사명 (예: 삼성전자)">
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="stock_code" class="form-control" placeholder="(선택) 종목코드">
+        </div>
+        <div class="col-md-3 d-grid">
+          <button type="submit" class="btn btn-success">➕ 추가</button>
+        </div>
+      </form>
+
+      <!-- 관심 종목 목록 -->
+      {% if items %}
+        <ul class="list-group">
+          {% for it in items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <span class="fw-bold">{{ it.company_name }}</span>
+                {% if it.stock_code %}
+                  <small class="text-muted">({{ it.stock_code }})</small>
+                {% endif %}
+              </div>
+              <div>
+                <a href="{% url 'accounts:remove_watch' it.pk %}" class="btn btn-sm btn-outline-danger me-1">🗑 삭제</a>
+                <a href="{% url 'crawlings:comments_printing' %}?name={{ it.company_name|urlencode }}" class="btn btn-sm btn-outline-primary">💬 댓글 보기</a>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="alert alert-warning mt-3" role="alert">
+          아직 등록된 관심종목이 없습니다.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% comment %} crawlings/templates/comments.html {% endcomment %}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>댓글 리스트</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* OOCSS 기반 구성 (Module: header, module: comment, module: action) */
+
+    :root {
+      --bg: #f8f9fa;
+      --text: #343a40;
+      --muted: #6c757d;
+      --border: #eceff4;
+    }
+
+    /* Header 모듈 (UI용 바탕) */
+    .site-header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+    }
+    /* Logo 아이콘 (SVG 내장으로 대체) */
+    .logo {
+      width: 52px;
+      height: 52px;
+      display: inline-block;
+    }
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+    .brand-right {
+      color: #343a40;
+      font-weight: 500;
+    }
+
+    /* Content 영역 */
+    .content {
+      padding: 48px 0;
+    }
+
+    /* Comment 단위 (Module: comment) */
+    .comment {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #d0d0d0;
+      flex: 0 0 auto;
+    }
+    .comment__body { flex: 1; }
+    .comment__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author {
+      color: #343a40;
+      font-weight: 500;
+    }
+    .delete-btn {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+    }
+    .comment__text {
+      color: #212529;
+      line-height: 1.6;
+      margin: 6px 0 0;
+    }
+
+    /* Bottom action button (Module: navigation) */
+    .bottom-action {
+      display: flex;
+      justify-content: flex-end;
+      padding: 24px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .content { padding: 28px 0; }
+    }
+  </style>
+</head>
+<body class="bg-white text-dark">
+  <header class="site-header border-bottom">
+    <div class="container d-flex justify-content-between align-items-center" style="min-height:72px;">
+      <div class="brand d-flex align-items-center">
+        <span class="brand-name">토스증권</span>
+      </div>
+      <div class="brand-right">
+        {% if name %}{{ name }}{% else %}전체 댓글{% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="container" style="max-width: 900px;">
+
+      <!-- 플래시 메시지 -->
+      {% if messages %}
+        <div class="mt-3">
+          {% for m in messages %}
+            <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- 상단: 재크롤링 폼 -->
+      <form class="row g-2 my-3" action="{% url 'crawlings:comments_crawling' %}" method="get">
+        <div class="col-auto">
+          <input class="form-control" type="text" name="name" placeholder="회사명" value="{{ name }}">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary" type="submit">새로 크롤링</button>
+        </div>
+        <div class="col-auto ms-auto">
+          <a class="btn btn-outline-secondary" href="{% url 'crawlings:index' %}">메인</a>
+        </div>
+      </form>
+
+      {% if user.is_authenticated and name %}
+        <div class="card my-3 border-0 shadow-sm">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <span class="fw-bold text-primary">
+              👉 {{ name }} 회사를 관심종목에 추가하시겠습니까?
+            </span>
+            <form method="post" action="{% url 'accounts:add_watch' %}" class="m-0">
+              {% csrf_token %}
+              <input type="hidden" name="company_name" value="{{ name }}">
+              <button type="submit" class="btn btn-sm btn-outline-primary">
+                관심종목 추가
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+
+
+
+      {# --- 감성 요약 박스 --- #}
+      {% if summary %}
+      <div class="my-3 p-3 border rounded-3">
+        <div class="d-flex align-items-center justify-content-between">
+          <h5 class="mb-0">감성 요약</h5>
+          <small class="text-muted">
+            {% if name %}{{ name }}{% else %}전체{% endif %} 댓글 {{ summary.total }}건
+          </small>
+        </div>
+        <div class="mt-2">
+          <span class="badge text-bg-primary me-2">긍정 {{ summary.pos_pct }}%</span>
+          <span class="badge text-bg-secondary me-2">중립 {{ summary.neu_pct }}%</span>
+          <span class="badge text-bg-danger">부정 {{ summary.neg_pct }}%</span>
+        </div>
+      </div>
+      {% endif %}
+
+
+      {% comment %} 워드클라우드 섹션 {% endcomment %}
+      {% if wc_data %}
+        <section class="my-4 p-3 border rounded-3">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h5 class="mb-0">워드클라우드</h5>
+            <small class="text-muted">
+              {% if name %}{{ name }}{% else %}전체{% endif %} 댓글 기반
+            </small>
+          </div>
+          <div class="text-center">
+            <img
+              src="data:image/png;base64,{{ wc_data }}"
+              alt="워드클라우드"
+              class="img-fluid"
+              style="max-height: 520px; object-fit: contain;"
+            />
+          </div>
+        </section>
+      {% endif %}
+
+      {# --- 댓글 리스트: 감성 배지 포함 --- #}
+      <ul class="list-group my-4">
+        {% for comment, sa in combined %}
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <div>{{ comment.text }}</div>
+              <div>
+                {% if sa.label == 'positive' %}
+                  <span class="badge text-bg-primary">긍정 {{ sa.score }}</span>
+                {% elif sa.label == 'negative' %}
+                  <span class="badge text-bg-danger">부정 {{ sa.score }}</span>
+                {% else %}
+                  <span class="badge text-bg-secondary">중립 {{ sa.score }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <!-- ...상단/메시지/폼 동일... -->
+
+      {% if comments %}
+        {% for c in comments %}
+        <div class="comment my-3 p-3 border rounded-3">
+          <div class="d-flex align-items-start">
+            <div class="avatar me-3" style="width:36px;height:36px;border-radius:50%;background:#e9ecef;"></div>
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center">
+                <span class="author fw-semibold me-2">{{ c.company_name }}</span>
+                <small class="text-muted">{{ c.created_at|date:"Y-m-d H:i" }}</small>
+
+                <!-- 배지 클러스터: 감성분석 + 삭제 -->
+                <div class="ms-auto d-flex align-items-center gap-2">
+                  <!-- 감성분석 배지 -->
+                  <span class="badge rounded-pill text-bg-{{ c.sentiment_class }}">
+                    {{ c.sentiment_label }}
+                  </span>
+                  <!-- 삭제 배지 (버튼 대신 배지형 앵커) -->
+                  <a class="badge rounded-pill text-bg-danger text-decoration-none"
+                    href="{% url 'crawlings:delete' c.pk %}"
+                    onclick="return confirm('해당 댓글을 삭제할까요?');">
+                    삭제
+                  </a>
+                </div>
+              </div>
+
+              <p class="mb-0 mt-2" style="white-space:pre-wrap;">{{ c.text }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="mt-4 text-muted">표시할 댓글이 없습니다.</p>
+      {% endif %}
+
+
+
+    </div>
+  </main>
+  <div>
+    <h2>댓글 목록 {% if name %}- {{ name }}{% endif %}</h2>
+
+    {% if user.is_authenticated and name %}
+    <form method="post" action="{% url 'accounts:add_watch' %}">
+      {% csrf_token %}
+      <input type="hidden" name="company_name" value="{{ name }}">
+      <button type="submit">이 회사를 관심종목에 추가</button>
+    </form>
+    {% endif %}
+
+    
+
+  </div>
+
+{% endblock %}
+{% comment %} </body>
+
+</html> {% endcomment %}
