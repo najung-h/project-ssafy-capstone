@@ -1,0 +1,101 @@
+{% extends 'formsapp/base.html' %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-header">
+    <h2>상속된 Form</h2>
+    <p class="text-muted">Django Forms의 상속을 통해 기능을 확장하는 예시입니다.</p>
+  </div>
+
+
+  <div class="form-section">
+    <h4>상속된 Form 렌더링 결과</h4>
+    <div class="card">
+      <div class="card-body">
+        <form method="post" action="">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ form }}
+            <button type="submit" class="btn btn-primary">제출</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% comment %} 
+  <div class="form-section">
+    <h4>복합적인 Form 상속 예시</h4>
+    <pre><code>
+# 기본 사용자 정보 폼
+class UserInfoForm(forms.Form):
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+    email = forms.EmailField()
+
+# 프로필 정보 폼
+class ProfileForm(UserInfoForm):
+    bio = forms.CharField(widget=forms.Textarea, required=False)
+    birth_date = forms.DateField(required=False)
+    
+# 개발자 프로필 폼
+class DeveloperProfileForm(ProfileForm):
+    github_username = forms.CharField(max_length=50)
+    programming_languages = forms.MultipleChoiceField(
+        choices=[
+            ('py', 'Python'),
+            ('js', 'JavaScript'),
+            ('java', 'Java'),
+            ('cpp', 'C++'),
+        ],
+        widget=forms.CheckboxSelectMultiple
+    )
+    </code></pre>
+  </div>
+
+  <div class="form-section">
+    <h4>폼 상속을 통한 유효성 검사 확장</h4>
+    <pre><code>
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not email.endswith(('.com', '.org', '.net')):
+            raise forms.ValidationError("유효한 이메일 도메인이 아닙니다.")
+        return email
+
+class BusinessContactForm(ContactForm):
+    company = forms.CharField(max_length=100)
+    position = forms.CharField(max_length=100)
+    
+    # 부모 클래스의 clean_email을 확장
+    def clean_email(self):
+        email = super().clean_email()  # 부모 클래스의 검증 먼저 실행
+        if not email.endswith('.com'):
+            raise forms.ValidationError("비즈니스 연락처는 .com 이메일만 허용됩니다.")
+        return email
+    
+    # 추가 필드에 대한 유효성 검사
+    def clean_company(self):
+        company = self.cleaned_data['company']
+        if len(company) < 3:
+            raise forms.ValidationError("회사명은 최소 3글자 이상이어야 합니다.")
+        return company
+    </code></pre>
+  </div>
+
+  <div class="form-section">
+    <h4>Form 상속의 장점</h4>
+    <ul class="list-group">
+      <li class="list-group-item">코드 재사용성 향상: 공통된 필드와 로직을 부모 폼에 정의</li>
+      <li class="list-group-item">확장성: 기존 폼에 새로운 필드나 기능 추가 용이</li>
+      <li class="list-group-item">유지보수성: 코드 중복 감소 및 일관성 유지</li>
+      <li class="list-group-item">계층적 구조: 점점 전문화되는 폼 계층 구조 생성 가능</li>
+      <li class="list-group-item">유효성 검사 규칙 상속 및 확장: 부모 폼의 검증 로직을 그대로 활용하거나 확장</li>
+    </ul>
+  </div> 
+{% endcomment %}
+</div>
+{% endblock %} 

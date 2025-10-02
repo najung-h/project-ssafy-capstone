@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>댓글 리스트 - Bootstrap5</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* OOCSS 기반 구성 (Module: header, module: comment, module: action) */
+
+    :root {
+      --bg: #f8f9fa;
+      --text: #343a40;
+      --muted: #6c757d;
+      --border: #eceff4;
+    }
+
+    /* Header 모듈 (UI용 바탕) */
+    .site-header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+    }
+    /* Logo 아이콘 (SVG 내장으로 대체) */
+    .logo {
+      width: 52px;
+      height: 52px;
+      display: inline-block;
+    }
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+    .brand-right {
+      color: #343a40;
+      font-weight: 500;
+    }
+
+    /* Content 영역 */
+    .content {
+      padding: 48px 0;
+    }
+
+    /* Comment 단위 (Module: comment) */
+    .comment {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #d0d0d0;
+      flex: 0 0 auto;
+    }
+    .comment__body { flex: 1; }
+    .comment__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author {
+      color: #343a40;
+      font-weight: 500;
+    }
+    .delete-btn {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+    }
+    .comment__text {
+      color: #212529;
+      line-height: 1.6;
+      margin: 6px 0 0;
+    }
+
+    /* Bottom action button (Module: navigation) */
+    .bottom-action {
+      display: flex;
+      justify-content: flex-end;
+      padding: 24px 8px;
+    }
+
+    @media (max-width: 768px) {
+      .content { padding: 28px 0; }
+    }
+  </style>
+</head>
+<body class="bg-white text-dark">
+
+  <!-- Header -->
+  <header class="site-header border-bottom">
+    <div class="container d-flex justify-content-between align-items-center" style="min-height:72px;">
+      <div class="brand d-flex align-items-center">
+        <!-- Logo (SVG) -->
+        <svg class="logo" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-label="로고">
+          <defs>
+            <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#2d6cff"/>
+              <stop offset="1" stop-color="#1e5bd8"/>
+            </linearGradient>
+          </defs>
+          <circle cx="22" cy="28" r="12" fill="url(#grad)"/>
+          <circle cx="34" cy="18" r="12" fill="url(#grad)" opacity="0.6"/>
+        </svg>
+        <span class="brand-name">토스증권</span>
+      </div>
+      <div class="brand-right">회사명</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="content">
+    <div class="container" style="max-width: 900px;">
+      <!-- Comment Item 1 -->
+      <div class="comment" aria-label="user-comment">
+        <div class="avatar" aria-label="avatar"></div>
+        <div class="comment__body">
+          <div class="comment__header">
+            <span class="author">Vinh Bui</span>
+            <button type="button" class="btn btn-primary btn-sm ms-auto delete-btn">Delete</button>
+          </div>
+          <p class="comment__text mb-0">
+            Lorem ipsum dolor sit amet, vince adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+        </div>
+      </div>
+
+      <!-- Comment Item 2 -->
+      <div class="comment" aria-label="user-comment-2">
+        <div class="avatar" aria-label="avatar"></div>
+        <div class="comment__body">
+          <div class="comment__header">
+            <span class="author">Vinh Bui</span>
+            <button type="button" class="btn btn-primary btn-sm ms-auto delete-btn">Delete</button>
+          </div>
+          <p class="comment__text mb-0">
+            Lorem ipsum dolor sit amet, vince adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quisnostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+        </div>
+      </div>
+
+      <!-- Comment Item 3 -->
+      <div class="comment" aria-label="user-comment-3">
+        <div class="avatar" aria-label="avatar"></div>
+        <div class="comment__body">
+          <div class="comment__header">
+            <span class="author">Vinh Bui</span>
+            <button type="button" class="btn btn-primary btn-sm ms-auto delete-btn">Delete</button>
+          </div>
+          <p class="comment__text mb-0">
+            Lorem ipsum dolor sit amet, vince adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+        </div>
+      </div>
+
+      <!-- Comment Item 4 -->
+      <div class="comment" aria-label="user-comment-4">
+        <div class="avatar" aria-label="avatar"></div>
+        <div class="comment__body">
+          <div class="comment__header">
+            <span class="author">Vinh Bui</span>
+            <button type="button" class="btn btn-primary btn-sm ms-auto delete-btn">Delete</button>
+          </div>
+          <p class="comment__text mb-0">
+            Lorem ipsum dolor sit amet, vince adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+        </div>
+      </div>
+
+      <!-- 메인페이지 버튼 (우측 하단 근처) -->
+      <div class="bottom-action">
+        <button type="button" class="btn btn-outline-dark rounded-pill px-4">메인페이지</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
