@@ -35,15 +35,15 @@
 - 로그인 상태에 따라 메뉴가 다르게 표시되도록 구현
     - 비로그인: 회원가입, 로그인 메뉴
       
-        ![image.png](readme_image/image.png)
+        ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image.png)
         
     - 로그인: 로그아웃, 프로필 페이지(관심 종목 관리)
       
-        ![image.png](readme_image/image%201.png)
+        ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%201.png)
     
 - 공통 기능으로 주식 댓글 분석 페이지 접근 가능
   
-    ![image.png](readme_image/image%202.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%202.png)
     
     `Stock Insight` 클릭!
     
@@ -52,12 +52,12 @@
 
 - Django 기본 User 모델 기반
   
-    ![image.png](readme_image/image%203.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%203.png)
     
 - 입력 필드: `username`, `password1`, `password2`
 - 회원가입 성공 시 **자동 로그인 처리** 및 메인 페이지 이동 완료
   
-    ![image.png](readme_image/image%204.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%204.png)
     
 
 ### **C. 로그인/로그아웃 구현 (F03)**
@@ -65,25 +65,25 @@
 - Django `auth` 모듈 활용
 - 로그인 성공 시 사용자 이름 표시
   
-    ![image.png](readme_image/image%205.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%205.png)
     
 - 로그아웃은 POST 요청 기반 버튼으로 구현, 성공 시 로그인/회원가입 버튼 표시
   
-    ![image.png](readme_image/image%206.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%206.png)
     
 
 ### **D. 관심 종목 저장 모델 구현 (F04)**
 
-![image.png](readme_image/image%207.png)
+![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%207.png)
 
-![image.png](readme_image/image%208.png)
+![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%208.png)
 
 - `WatchItem` 모델 설계
     - 외래키(ForeignKey)로 User와 연결
     - 종목명, 종목코드, 생성일자 포함
 - 동일 사용자가 동일 종목을 중복 저장하지 못하도록 **UniqueConstraint 적용**
   
-    ![image.png](readme_image/image%209.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%209.png)
     
 
 ### **E. 프로필 페이지 – 관심 종목 관리 (F05)**
@@ -92,16 +92,16 @@
 - 저장된 종목이 없을 경우 안내 메시지 출력
 - 각 종목명 옆에 삭제 버튼 배치, 클릭 시 DB에서 제거 후 갱신
   
-    ![image.png](readme_image/image%2010.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%2010.png)
     
 
 ### **F. 관심 종목 클릭 시 크롤링 (F06)**
 
 - 관심 종목 리스트에서 종목명을 클릭하면 댓글 분석 페이지로 이동
   
-    ![image.png](readme_image/image%2011.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%2011.png)
     
-    ![image.png](readme_image/image%2012.png)
+    ![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%2012.png)
     
 - 데이터 출력 규칙:
     - DB에 해당 종목 댓글이 있으면 DB 데이터 출력
@@ -138,11 +138,11 @@
 2. 실행 결과 화면 캡처 (회원가입, 로그인/로그아웃, 관심 종목 관리, 댓글 조회)
 3. README.md (본 문서)
 
-![image.png](readme_image/image%2013.png)
+![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%2013.png)
 
-![image.png](readme_image/image%2014.png)
+![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%2014.png)
 
-![image.png](readme_image/image%2015.png)
+![image.png](project/pjt-5-로그인및회원가입기능구현/readme_image/image%2015.png)
 
 ---
 
